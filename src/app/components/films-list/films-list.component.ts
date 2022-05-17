@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Film } from 'src/app/models/film';
+import { SearcherService } from 'src/app/services/searcher.service';
 
 @Component({
   selector: 'app-films-list',
@@ -10,54 +11,61 @@ import { Film } from 'src/app/models/film';
 export class FilmsListComponent implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   
-  films: Film[] = [
-    {
-      title: "Star Wars",
-      year: 1977,
-      poster: "https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
-      plot: ''
-    },
-    {
-      title:"Star Wars: Episode VI - Return of the Jedi",
-      year:1983,
-      poster:"https://m.media-amazon.com/images/M/MV5BOWZlMjFiYzgtMTUzNC00Y2IzLTk1NTMtZmNhMTczNTk0ODk1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
-      plot: ''
-    },
-    {
-      title:"Star Wars: Episode VII - The Force Awakens",
-      year:2015,
-      poster:"https://m.media-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_SX300.jpg",
-      plot: ''
-    },
-    {
-      title:"Star Wars: Episode I - The Phantom Menace",
-      year:1999,
-      poster:"https://m.media-amazon.com/images/M/MV5BYTRhNjcwNWQtMGJmMi00NmQyLWE2YzItODVmMTdjNWI0ZDA2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
-      plot: ''
-    },
-    {
-      title:"Star Wars: Episode III - Revenge of the Sith",
-      year:2005,
-      poster:"https://m.media-amazon.com/images/M/MV5BNTc4MTc3NTQ5OF5BMl5BanBnXkFtZTcwOTg0NjI4NA@@._V1_SX300.jpg",
-      plot: ''
-    },
-    {
-      title:"Star Wars: Episode II - Attack of the Clones",
-      year:2002, 
-      poster:"https://m.media-amazon.com/images/M/MV5BMDAzM2M0Y2UtZjRmZi00MzVlLTg4MjEtOTE3NzU5ZDVlMTU5XkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_SX300.jpg",
-      plot: ''
-    },
-    {
-      title:"Star Wars: Episode VIII - The Last Jedi",
-      year:2017,
-      poster:"https://m.media-amazon.com/images/M/MV5BMjQ1MzcxNjg4N15BMl5BanBnXkFtZTgwNzgwMjY4MzI@._V1_SX300.jpg",
-      plot: ''
-    },
-  ];
+  films: Film[] = []
+  // [
+  //   {
+  //     title: "Star Wars",
+  //     year: 1977,
+  //     poster: "https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+  //     plot: ''
+  //   },
+  //   {
+  //     title:"Star Wars: Episode VI - Return of the Jedi",
+  //     year:1983,
+  //     poster:"https://m.media-amazon.com/images/M/MV5BOWZlMjFiYzgtMTUzNC00Y2IzLTk1NTMtZmNhMTczNTk0ODk1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+  //     plot: ''
+  //   },
+  //   {
+  //     title:"Star Wars: Episode VII - The Force Awakens",
+  //     year:2015,
+  //     poster:"https://m.media-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_SX300.jpg",
+  //     plot: ''
+  //   },
+  //   {
+  //     title:"Star Wars: Episode I - The Phantom Menace",
+  //     year:1999,
+  //     poster:"https://m.media-amazon.com/images/M/MV5BYTRhNjcwNWQtMGJmMi00NmQyLWE2YzItODVmMTdjNWI0ZDA2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+  //     plot: ''
+  //   },
+  //   {
+  //     title:"Star Wars: Episode III - Revenge of the Sith",
+  //     year:2005,
+  //     poster:"https://m.media-amazon.com/images/M/MV5BNTc4MTc3NTQ5OF5BMl5BanBnXkFtZTcwOTg0NjI4NA@@._V1_SX300.jpg",
+  //     plot: ''
+  //   },
+  //   {
+  //     title:"Star Wars: Episode II - Attack of the Clones",
+  //     year:2002, 
+  //     poster:"https://m.media-amazon.com/images/M/MV5BMDAzM2M0Y2UtZjRmZi00MzVlLTg4MjEtOTE3NzU5ZDVlMTU5XkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_SX300.jpg",
+  //     plot: ''
+  //   },
+  //   {
+  //     title:"Star Wars: Episode VIII - The Last Jedi",
+  //     year:2017,
+  //     poster:"https://m.media-amazon.com/images/M/MV5BMjQ1MzcxNjg4N15BMl5BanBnXkFtZTgwNzgwMjY4MzI@._V1_SX300.jpg",
+  //     plot: ''
+  //   },
+  // ];
 
-  constructor() { }
+  constructor(private searcherService:SearcherService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.films = this.searcherService.getFilms();
+  }
+
+  onUpdate(films: Film[]) {
+    this.films = films;
+  }
 
   loadData(event) {
     setTimeout(() => {

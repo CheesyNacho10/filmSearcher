@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DetailsComponent } from './details.component';
+import { FilmSearchbarComponent } from './film-searchbar.component';
 
-describe('DetailsComponent', () => {
-  let component: DetailsComponent;
-  let fixture: ComponentFixture<DetailsComponent>;
+describe('FilmSearchbarComponent', () => {
+  let component: FilmSearchbarComponent;
+  let fixture: ComponentFixture<FilmSearchbarComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailsComponent ],
+      declarations: [ FilmSearchbarComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DetailsComponent);
+    fixture = TestBed.createComponent(FilmSearchbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

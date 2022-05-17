@@ -7,19 +7,20 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { FilmsListComponent } from '../films-list/films-list.component';
 import { FilmCardComponent } from '../film-card/film-card.component';
-
+import { FilmSearchbarComponent } from '../film-searchbar/film-searchbar.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
   ],
   declarations: [
     HomePage,
     FilmsListComponent,
-    FilmCardComponent
+    FilmCardComponent,
+    FilmSearchbarComponent,
   ]
 })
 export class HomePageModule {}
