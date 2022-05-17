@@ -1,13 +1,8 @@
 <ion-content>
-  <!-- <ion-button (click)="toggleInfiniteScroll()" expand="block">
-    Toggle Infinite Scroll
-  </ion-button> -->
-
   <ion-list>
     <app-film-card 
       *ngFor="let film of films" 
-      [film]="film"
-      (filmsUpdated)="onUpdate($event)">
+      [film]="film">
     </app-film-card>
   </ion-list>
 

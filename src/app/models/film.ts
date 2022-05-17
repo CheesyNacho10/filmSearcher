@@ -1,6 +1,7 @@
 export class Film{
-    title:string = '';
-    year:number = 0;
-    plot:string = '';
-    poster:string = '';
+    Title:string = '';
+    Year:number = 0;
+    imbID:string = '';
+    Type:string = '';
+    Poster:string = '';
 }
