@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SearcherService } from 'src/app/services/searcher.service';
 import { DetailedFilm } from 'src/app/models/detailedFilm';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-detailed-film-card',
@@ -10,11 +11,15 @@ import { Router } from '@angular/router';
 })
 export class DetailedFilmCardComponent implements OnInit {
   filmDetail:DetailedFilm = new DetailedFilm();
+  serviceSubscription:Subscription = new Subscription();
 
-  constructor(private searcherService: SearcherService,
-    private router: Router) {
-    this.searcherService.filmClickedEvent$.subscribe(
-      (detail) => this.onDetail(detail)
+  constructor(private searcherService: SearcherService) {
+    this.serviceSubscription = this.searcherService.filmClickedSubject
+    .asObservable().subscribe(
+      (detail) => {
+        console.log(detail)
+        this.onDetail(detail)
+      }
     )
   }
 
@@ -26,6 +31,6 @@ export class DetailedFilmCardComponent implements OnInit {
   onDetail(detail:DetailedFilm) {
     console.log(detail)
     this.filmDetail = detail;
-    this.router.navigateByUrl('/details');
+    
   }
 }

@@ -4,8 +4,8 @@ import { QueryRes } from '../models/queryRes';
 import { Film } from '../models/film';
 import { DetailedFilm } from '../models/detailedFilm';
 import { EventEmitter } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,7 @@ export class SearcherService {
   films:Film[] = []
 
   @Output() filmsUpdated: EventEmitter<Film[]> = new EventEmitter();
-  // filmClickedEvent: EventEmitter<DetailedFilm> = new EventEmitter();
-  filmClickedSubject:Subject<DetailedFilm> = new Subject()
-  filmClickedEvent$ = this.filmClickedSubject.asObservable();
+  filmClickedSubject:Subject<any> = new Subject()
 
   constructor(private http:HttpClient, private router: Router) { }
 
@@ -26,7 +24,7 @@ export class SearcherService {
   }
 
   onDetails(filmId:string) {
-    this.resolveDetailedQuery(filmId);
+    this.resolveDetailedQuery(filmId)
   }
 
   resolveDetailedQuery(id:string) {
@@ -35,11 +33,12 @@ export class SearcherService {
     this.http.get<DetailedFilm>(queryUrl).subscribe(queryRes => {
       if (queryRes.Response) {
         this.detailsFilm = queryRes;
-        this.filmClickedSubject.next(this.detailsFilm)
       }
       else {
         this.detailsFilm = new DetailedFilm();
       }
+      this.router.navigateByUrl('/details');
+      this.filmClickedSubject.next(this.detailsFilm)
     })
   }
 
