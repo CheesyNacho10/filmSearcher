@@ -14,4 +14,14 @@ export class DetailedFilm {
     Awards:string = '';
     Poster:string = '';
     Ratings:any = "";
+    Metascore:number = 0;
+    imdbRating:number = 0;
+    imdbVotes:number = 0;
+    imdbID:number = 0;
+    Type:string = '';
+    DVD:string = '';
+    BoxOffice:string = '';
+    Production:string = '';
+    Website:string = '';
+    Response:boolean = false;
 }

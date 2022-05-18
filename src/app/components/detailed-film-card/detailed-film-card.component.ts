@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Film } from 'src/app/models/film';
 import { SearcherService } from 'src/app/services/searcher.service';
+import { DetailedFilm } from 'src/app/models/detailedFilm';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detailed-film-card',
@@ -8,12 +9,23 @@ import { SearcherService } from 'src/app/services/searcher.service';
   styleUrls: ['./detailed-film-card.component.scss'],
 })
 export class DetailedFilmCardComponent implements OnInit {
-  film:Film = new Film();
+  filmDetail:DetailedFilm = new DetailedFilm();
 
-  constructor(private searcherService: SearcherService) {}
+  constructor(private searcherService: SearcherService,
+    private router: Router) {
+    this.searcherService.filmClickedEvent$.subscribe(
+      (detail) => this.onDetail(detail)
+    )
+  }
 
   ngOnInit() {
-    this.film = this.searcherService.detailsFilm
+    this.filmDetail = this.searcherService.detailsFilm
+    console.log(this.filmDetail)
   } 
 
+  onDetail(detail:DetailedFilm) {
+    console.log(detail)
+    this.filmDetail = detail;
+    this.router.navigateByUrl('/details');
+  }
 }

@@ -18,7 +18,6 @@ export class FilmCardComponent implements OnInit {
   ngOnInit() {}
 
   onClick(event) {
-    this.searcherService.onDetails(this.film)
-    this.router.navigateByUrl('/details');
+    this.searcherService.onDetails(this.film.imdbID)
   }
 }
