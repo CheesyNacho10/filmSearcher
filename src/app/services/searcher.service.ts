@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class SearcherService {
   detailsFilm: DetailedFilm = new DetailedFilm();
   films:Film[] = [];
-  query:string = '';
+  lastQuery:string = '';
   filmsPage = 0;
 
   @Output() filmsUpdated: EventEmitter<Film[]> = new EventEmitter();
@@ -21,8 +21,15 @@ export class SearcherService {
 
   constructor(private http:HttpClient, private router: Router) { }
 
-  getFilms() {
-    return this.films;
+  newSearch(query:string) {
+    this.filmsPage = 0;
+    while (this.filmsPage < 4) {
+      this.resolveUserQuery(query);
+    }
+  }
+  
+  searchMoreFilms() {
+    this.resolveUserQuery(this.lastQuery)
   }
 
   onDetails(filmId:string) {
@@ -44,44 +51,21 @@ export class SearcherService {
     })
   }
 
-  moreFilms() {
-    this.resolveUserQuery(this.query)
-  }
-
   resolveUserQuery(query:string) {
-    this.query = query;
-    if (this.filmsPage == 0) {
-      this.films = [];
-      while (this.filmsPage < 3) {
-        this.filmsPage += 1;
-        let queryUrl = "https://www.omdbapi.com/?apikey=71a9a541&type=movie&s=" 
-          + query.replace(" ", "+").toLowerCase()
-          + "&page=" + this.filmsPage;
-        this.http.get<QueryRes>(queryUrl).subscribe(queryRes => {
-          if (queryRes.Response) {
-            this.insertFilms(queryRes.Search);
-          }
-          else {
-            this.films = [];
-          }
-        })
+    this.lastQuery = query;
+    if (this.filmsPage == 0) this.films = [];
+    this.filmsPage += 1;
+    let queryUrl = "https://www.omdbapi.com/?apikey=71a9a541&type=movie&s=" 
+      + query.replace(" ", "+").toLowerCase()
+      + "&page=" + this.filmsPage;
+    this.http.get<QueryRes>(queryUrl).subscribe(queryRes => {
+      if (queryRes.Response) {
+        this.insertFilms(queryRes.Search);
       }
-    }
-    else {
-      this.filmsPage += 1;
-        let queryUrl = "https://www.omdbapi.com/?apikey=71a9a541&type=movie&s=" 
-          + query.replace(" ", "+").toLowerCase()
-          + "&page=" + this.filmsPage;
-        this.http.get<QueryRes>(queryUrl).subscribe(queryRes => {
-          if (queryRes.Response) {
-            this.insertFilms(queryRes.Search);
-          }
-          else {
-            this.films = [];
-          }
-        })
-    }
-    
+      else {
+        this.films = [];
+      }
+    })
   }
 
   insertFilms(queryFilms) {

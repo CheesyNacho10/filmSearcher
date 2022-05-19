@@ -8,14 +8,11 @@ import { SearcherService } from 'src/app/services/searcher.service';
 })
 export class FilmSearchbarComponent implements OnInit {
 
-  constructor(private searcherService: SearcherService) {
-
-  }
+  constructor(private searcherService: SearcherService) { }
 
   ngOnInit() {}
   
   onSearch(event) {
-    this.searcherService.filmsPage = 0;
-    this.searcherService.resolveUserQuery(event.detail.value)
+    this.searcherService.newSearch(event.detail.value)
   }
 }

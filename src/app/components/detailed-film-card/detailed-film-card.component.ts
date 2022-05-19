@@ -28,6 +28,5 @@ export class DetailedFilmCardComponent implements OnInit {
 
   onDetail(detail:DetailedFilm) {
     this.filmDetail = detail;
-    
   }
 }

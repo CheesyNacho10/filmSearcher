@@ -19,9 +19,7 @@ export class FilmsListComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.films = this.searcherService.getFilms();
-  }
+  ngOnInit() { }
 
   onUpdate(films: Film[]) {
     this.films = films;
@@ -29,7 +27,7 @@ export class FilmsListComponent implements OnInit {
 
   loadData(event) {
     setTimeout(() => {
-      this.searcherService.moreFilms()
+      this.searcherService.searchMoreFilms()
       event.target.complete();
 
       // App logic to determine if all data is loaded
