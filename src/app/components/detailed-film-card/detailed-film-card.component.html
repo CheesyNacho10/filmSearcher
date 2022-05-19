@@ -1,10 +1,52 @@
 <ion-card color="medium">
-    <img src={{filmDetail.Poster}}/>
-    
     <ion-card-header>
+        <img src={{filmDetail.Poster}}/>
         <ion-card-subtitle>{{filmDetail.Year}}</ion-card-subtitle>
         <ion-card-title>{{filmDetail.Title}}</ion-card-title>
     </ion-card-header>
-    
-    <ion-card-content></ion-card-content>
+
+    <ion-card-content text-wrap>
+        <div>
+            <ion-header>
+                <ion-title>Plot</ion-title>
+            </ion-header>
+            <p><br>{{filmDetail.Plot}}</p>
+        </div>
+        <div>
+            <ion-header>
+                <ion-title><br>Director</ion-title>
+            </ion-header>
+            <p><br>{{filmDetail.Director}}</p>
+        </div>
+        <div>
+            <ion-header>
+                <ion-title><br>Writer</ion-title>
+            </ion-header>
+            <p><br>{{filmDetail.Writer}}</p>
+        </div>
+        <div>
+            <ion-header>
+                <ion-title><br>Actors</ion-title>
+            </ion-header>
+            <p><br>{{filmDetail.Actors}}</p>
+        </div>
+        <div>
+            <ion-header>
+                <ion-title><br>Genre</ion-title>
+            </ion-header>
+            <p><br>{{filmDetail.Genre}}</p>
+        </div>
+        <div>
+            <ion-header>
+                <ion-title><br>Language</ion-title>
+            </ion-header>
+            <p><br>{{filmDetail.Language}}</p>
+        </div>
+        <div>
+            <ion-header>
+                <ion-title><br>Runtime</ion-title>
+            </ion-header>
+            <p><br>{{filmDetail.Runtime}}</p>
+        </div>
+    </ion-card-content>
 </ion-card>
