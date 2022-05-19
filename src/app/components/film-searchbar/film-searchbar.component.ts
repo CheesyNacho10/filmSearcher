@@ -15,6 +15,7 @@ export class FilmSearchbarComponent implements OnInit {
   ngOnInit() {}
   
   onSearch(event) {
+    this.searcherService.filmsPage = 0;
     this.searcherService.resolveUserQuery(event.detail.value)
   }
 }

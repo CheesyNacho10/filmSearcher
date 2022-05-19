@@ -29,11 +29,12 @@ export class FilmsListComponent implements OnInit {
 
   loadData(event) {
     setTimeout(() => {
+      this.searcherService.moreFilms()
       event.target.complete();
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (this.films.length === 1000) {
+      if (this.films.length === 500) {
         event.target.disabled = true;
       }
     }, 500);

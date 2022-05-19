@@ -17,7 +17,6 @@ export class DetailedFilmCardComponent implements OnInit {
     this.serviceSubscription = this.searcherService.filmClickedSubject
     .asObservable().subscribe(
       (detail) => {
-        console.log(detail)
         this.onDetail(detail)
       }
     )
@@ -25,11 +24,9 @@ export class DetailedFilmCardComponent implements OnInit {
 
   ngOnInit() {
     this.filmDetail = this.searcherService.detailsFilm
-    console.log(this.filmDetail)
   } 
 
   onDetail(detail:DetailedFilm) {
-    console.log(detail)
     this.filmDetail = detail;
     
   }
